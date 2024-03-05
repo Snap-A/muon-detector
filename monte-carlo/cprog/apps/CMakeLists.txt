@@ -34,9 +34,9 @@ add_executable(exp_iso exp_iso.c)
 add_executable(tele tele.c)
 add_executable(solid solid.c)
 
-target_link_libraries(pdg_gun gun pdf sphere pdg ${MATH_LIBRARY})
-target_link_libraries(exp_decay gun pdf sphere ${MATH_LIBRARY})
-target_link_libraries(exp_iso gun pdf sphere ${MATH_LIBRARY})
+target_link_libraries(pdg_gun gun pdf sphere pdg vector ${MATH_LIBRARY})
+target_link_libraries(exp_decay gun pdf sphere pdg vector ${MATH_LIBRARY})
+target_link_libraries(exp_iso gun pdf sphere pdg vector ${MATH_LIBRARY})
 target_link_libraries(tele gun pdf sphere pdg geometry vector ${MATH_LIBRARY})
 target_link_libraries(solid gun pdf sphere pdg geometry vector ${MATH_LIBRARY})
 
