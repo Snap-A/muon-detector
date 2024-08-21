@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 ##########
 
-RUN_P="./cprog/build/apps/solid -f 0 -e 6000000"
-RUN_I="./cprog/build/apps/solid -f 1 -e 6000000"
+RUN_P="./build/apps/solid -f 0 -e 60000000 -o 30.0"
+RUN_I="./build/apps/solid -f 1 -e 60000000 -o 30.0"
 
 LIST="0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5"
 
@@ -16,10 +16,10 @@ echo "# BINS:   100"
 echo "# DEPTH:  0.01m"
 echo "# FLUX:   0"
 echo "# LENGTH: 0.1m"
-echo "# TOTAL:  6000000"
+echo "# TOTAL:  60000000"
 echo "# TRACK:  0.003m"
 echo "# WIDTH:  0.1m"
-echo "# WORLD:  8.0x"
+echo "# WORLD:  30.0x"
 } >> solid_pdg.data
 
 {
@@ -29,22 +29,26 @@ echo "# BINS:   100"
 echo "# DEPTH:  0.01m"
 echo "# FLUX:   1"
 echo "# LENGTH: 0.1m"
-echo "# TOTAL:  6000000"
+echo "# TOTAL:  60000000"
 echo "# TRACK:  0.003m"
 echo "# WIDTH:  0.1m"
-echo "# WORLD:  8.0x"
+echo "# WORLD:  30.0x"
 } >> solid_iso.data
 
 for th in $LIST; do
     line1=$($RUN_P ${th} | tail -n 1)
     val=$(echo ${line1} | awk '{ print $5}')
     err=$(echo ${line1} | awk '{ print $8}')
-    echo "${th} ${val} ${err}" >> solid_pdg.data
+    vala=$(echo "${val}*100" | bc)
+    erra=$(echo "${err}*100" | bc)
+    echo "${th} ${vala} ${erra}" >> solid_pdg.data
 done
 
 for th in $LIST; do
     line1=$($RUN_I ${th} | tail -n 1)
     val=$(echo ${line1} | awk '{ print $5}')
     err=$(echo ${line1} | awk '{ print $8}')
-    echo "${th} ${val} ${err}" >> solid_iso.data
+    vala=$(echo "${val}*100" | bc)
+    erra=$(echo "${err}*100" | bc)
+    echo "${th} ${vala} ${erra}" >> solid_iso.data
 done
